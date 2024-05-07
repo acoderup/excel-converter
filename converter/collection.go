@@ -3,7 +3,6 @@ package converter
 import (
 	"fmt"
 	"sort"
-	"strings"
 )
 
 const (
@@ -145,34 +144,16 @@ func (l *Collection) ReadLink(sheet Sheet) {
 			}
 		}
 	case FlagCategory:
-		var keys []string
-		var index = 0
-		for index < sheet.HeaderSize() {
-			layerKeys := sheet.GetHorizon(index)
-			if len(layerKeys) == 0 {
-				break
+		branches := sheet.GetHorizon(0)
+		groups := sheet.GetHorizon(1)
+		for _, branch := range branches {
+			l.categories = append(l.categories, branch)
+			for _, group := range groups {
+				category := fmt.Sprintf("%s_%s", format.ToUpper(branch), format.ToUpper(group))
+				Debug("[%s] category found, branch: %s, group: %s", category, branch, group)
+				l.categories = append(l.categories, category)
 			}
-
-			if index == 0 {
-				keys = layerKeys
-			} else {
-				var newKeys []string
-				for _, key := range keys {
-					for _, layerKey := range layerKeys {
-						newKeys = append(newKeys, fmt.Sprintf("%s_%s", key, format.ToUpper(layerKey)))
-					}
-				}
-				keys = newKeys
-			}
-
-			for _, key := range keys {
-				l.categories = append(l.categories, key)
-				Debug("[%s] category found, %v", key, strings.Split(key, "_"))
-			}
-
-			index++
 		}
-
 		sort.Strings(l.categories)
 	}
 }
