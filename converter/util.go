@@ -8,6 +8,7 @@ import (
 	"reflect"
 	"runtime"
 	"runtime/debug"
+	"strconv"
 	"strings"
 )
 
@@ -116,4 +117,25 @@ func Exists(s string) bool {
 		}
 	}
 	return true
+}
+
+// float2String converts a scientific notation string to a decimal notation string
+// It also removes trailing zeros in the fractional part
+func float2String(f string) string {
+	// Parse the string to float64
+	floatVal, err := strconv.ParseFloat(f, 64)
+	if err != nil {
+		fmt.Println("Error parsing float:", err)
+		return ""
+	}
+	// Use fmt.Sprintf to format the float64 as a decimal string
+	decimalStr := fmt.Sprintf("%f", floatVal)
+
+	// Remove trailing zeros in the fractional part
+	decimalStr = strings.TrimRight(decimalStr, "0")
+
+	// Remove the decimal point if it is at the end
+	decimalStr = strings.TrimRight(decimalStr, ".")
+
+	return decimalStr
 }

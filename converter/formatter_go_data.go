@@ -104,7 +104,11 @@ func (f *FormatterGoData) FormatBase(node Node, sources []Source) {
 		case "":
 			f.WriteString("0")
 		default:
-			f.WriteString(source.Content())
+			if node.Field().Structure == StructureTypeFloat {
+				f.WriteString(float2String(source.Content()))
+			} else {
+				f.WriteString(source.Content())
+			}
 		}
 	case StructureTypeBool:
 		switch source.Content() {
