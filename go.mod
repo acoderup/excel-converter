@@ -1,6 +1,6 @@
-module github.com/tomas-qstarrs/excel-converter
+module github.com/acoderup/excel-converter
 
-go 1.19
+go 1.24
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize/v2 v2.3.1

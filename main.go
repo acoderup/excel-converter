@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	. "github.com/tomas-qstarrs/excel-converter/converter"
+	. "github.com/acoderup/excel-converter/converter"
 )
 
 func main() {
